@@ -1,0 +1,46 @@
+<Study id="ybalab.daniel.death1.0001" datagroup="research">
+	<Definitions>
+        <Task id="instructions">instructions.jsp</Task>
+		<Task id="consent">consent.html</Task>
+		<Task id="realstart">intro.jsp</Task>
+
+		<Task id="behaviours" file="behaviours.js">piindex.jsp</Task>
+
+		<Task id="tomsr">tomsr.htm</Task>
+		<Task id="toexp">toexp.htm</Task>
+		<Task id="exp">exp.jsp</Task>
+
+		<Task id="instiat">instiat.htm</Task>
+		<Task id="iat" file="iat.js">iatindex.jsp</Task>
+
+		<Task id="tomem">tomem.htm</Task>
+		<Task id="mem">mem.jsp</Task>
+
+		<Task id="debriefing">debriefing.jsp</Task>
+		
+	</Definitions>
+
+<Map>
+
+	<Task id="instructions"/>
+	<Task id="consent"/>
+	<Task id="realstart"/>
+	<Task id="behaviours"/>
+	
+	<Task id="tomsr"/>
+	<Branch type="group" random="true" id="rndmsr">
+		<Task id="toexp">
+			<Task id="exp"/>
+		</Task>
+		<Task id="instiat">
+			<Task id="iat"/>
+		</Task>
+	</Branch>
+
+	<Task id="tomem">
+		<Task id="mem"/>
+	</Task>
+
+	<Task id="debriefing"/>
+</Map>
+</Study>
