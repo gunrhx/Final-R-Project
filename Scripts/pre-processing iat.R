@@ -1,6 +1,9 @@
 ####RETRIEVING IAT DATA ----
-getwd()
-iat_raw_data <- read.csv("iat_data/iat.csv")
+iat_collected_data <- read.csv("iat_data/iat.csv")
+if(!require('IAT')) {
+  install.packages('IAT')
+  library('IAT')
+}
 
 ####FILTERING RAW DATA ----
 

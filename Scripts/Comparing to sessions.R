@@ -5,8 +5,8 @@ View(try)
 completed <- try |>
   filter(session_status == "C")
 
-try3 <- iat_raw_data |>
-  filter(session_id %in% completed$session_id) |>
+iat_raw_data <- iat_collected_data |>
+  filter(session_id %in% completed_sessions$session_id) |>
   filter(block_name != "BLOCK1", block_name != "BLOCK2", block_name != "BLOCK3", block_name != "BLOCK4") |>
   filter(block_name != "null|", !grepl("null" ,block_pairing_definition))
 
