@@ -1,4 +1,9 @@
-####FILTERED DATA
+#clearing environment and loading libraries
+rm(list = ls())
+load("Processed Data/raw_data.RData")
+library(dplyr)
+
+####FILTERED DATA ----
 
 
 ####PROBABLY NOT NEDED ----
@@ -22,7 +27,7 @@ filtered_data$Anxiety_Difficulty <- relevel(filtered_data$Anxiety_Difficulty, re
 filtered_data <- raw_data |>
   select(Hours_per_week, Playstyle, Anxiety, Anxiety_Difficulty) |>
   na.omit() |>
-  filter(Hours_per_week <= 200) |>
+  filter(Hours_per_week <= 2*sd(Hours_per_week)) |>
   mutate(
     Playstyle = factor(ifelse(Playstyle == "Singleplayer", "Singleplayer", "Multiplayer")),
     Anxiety_Difficulty = factor(ifelse(grepl("Very|Extremely", Anxiety_Difficulty), 1, 0))
@@ -32,6 +37,7 @@ filtered_data$Anxiety_Difficulty <- relevel(filtered_data$Anxiety_Difficulty, re
 
 #filtering Singleplayer only data 
 filtered_data_Singleplayer_only <- filtered_data |>
+  select(-Anxiety) |>
   filter(Playstyle == "Singleplayer")
 
 #saving filtered data

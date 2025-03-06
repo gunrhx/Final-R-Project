@@ -2,8 +2,23 @@
 
 #loading packages and data
 load("Processed Data/raw_data.RData")
+source("Scripts/Functions.R")
 library(ggplot2)
 library(patchwork)
+
+#discriptive statistics
+descriptive_stats(raw_data)
+
+raw_data |>
+  group_by(Gender) |>
+  summarise(
+    amount = n(),
+    mean_age = mean(Age, na.rm = TRUE),
+    sd_age = sd(Age, na.rm = TRUE),
+    age_range = paste(range(Age)[1], "-", range(Age)[2]),
+    mean_anxiety = mean(Anxiety, na.rm = TRUE),
+    sd_anxiety = sd(Anxiety, na.rm = TRUE)
+  )
 
 #anxiety regression by hours per week, divided by gender
 anxiety_by_hours_per_gender <- ggplot(raw_data, aes(x = Hours_per_week, y = Anxiety, fill = Gender, color = Gender)) +
