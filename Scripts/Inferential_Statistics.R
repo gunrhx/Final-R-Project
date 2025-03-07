@@ -24,9 +24,11 @@ overall_effect_on_Anxiety <- ggplot(filtered_data, aes(x = Hours_per_week, y = A
   ) +
   theme_minimal() +
   scale_x_continuous(breaks = seq(0, max(filtered_data$Hours_per_week), by = 20),
-                     minor_breaks = seq(0, max(filtered_data$Hours_per_week), by = 10))
+                     minor_breaks = seq(0, max(filtered_data$Hours_per_week), by = 10)) +
+  scale_y_continuous(breaks = seq(0, max(filtered_data$Anxiety), by = 1),
+                     minor_breaks = seq(0, max(filtered_data$Anxiety), by = .5))
 
-#saving results graph
+#saving linear regression results graph
 ggsave("Graphs/Anxiety-Predicted-by-Hours-and-Playstyle.png", plot = overall_effect_on_Anxiety)
 
 
@@ -49,7 +51,7 @@ high_anxiety_probability <- ggplot(filtered_data_Singleplayer_only, aes(x = Hour
   geom_point(alpha = 0.3) +  # Scatter plot of raw data
   geom_smooth(method = "glm", method.args = list(family = "binomial"), color = "blue") +
   labs(
-    title = "Probability of High Anxiety Difficulty by Gaming Hours",
+    title = "Probability of High Anxiety Difficulty by Gaming Hours in Singleplayer",
     subtitle = "confidence level = 0.95",
     x = "Hours Spent Gaming per Week",
     y = "Predicted Probability of High Anxiety Difficulty"
@@ -59,5 +61,5 @@ high_anxiety_probability <- ggplot(filtered_data_Singleplayer_only, aes(x = Hour
                      minor_breaks = seq(0, max(filtered_data_Singleplayer_only$Hours_per_week), by = 10)) +
   scale_y_continuous(breaks = seq(0, 1, by = .1), minor_breaks = seq(0,1, by = .05))
 
-#saving results graph
+#saving logistic regression results graph
 ggsave("Graphs/Anxiety-Difficulty-Predicted-by-Hours-In-Singleplayer.png", plot = high_anxiety_probability)
