@@ -35,7 +35,9 @@ For my analysis, I used two regressions:
 2. Logistic Regression: predicting anxiety dibilitating properties using hours gaming per week, in singleplayer population only.
 
 ### Results
-As was hypothesized, more gaming hours were associated with more anxiety mostly in the population playing multiplayer (β = .037, _p_ = 2*10^-16), an effect that was almost completely attenuated in the population playing singleplayer (β = -.032, _p_ = .0115). These results suggests that in the multiplayer population, each hour spent gaming increases anxiety levels by 0.037 points, but in the singleplayer population this decreases by 0.032 points (resulting in an overall increase of 0.005 for singleplayer). 
+As was hypothesized, more gaming hours were associated with more anxiety mostly in the population playing multiplayer (β = .037, _p_ = 2*10^-16), an effect that was almost completely attenuated in the population playing singleplayer (β = -.032, _p_ = .0115). These results suggests that in the multiplayer population, each hour spent gaming increases anxiety levels by 0.037 points, but in the singleplayer population this decreases by 0.032 points (resulting in an overall increase of 0.005 for singleplayer).
+![Graphs/Anxiety Predicted by Hours and Playstyle.png](Graphs/Anxiety Predicted by Hours and Playstyle.png)
+
 Against my second hypothesis, in the singleplayer population, hours spent gaming per week was a significant predictor of experiencing debilitating anxiety effects (β = .016, _p_ = .021, odds ratio = 1.016). The odds ratio suggests that for each additional hour spent gaming per week, the odds of reporting high anxiety difficulty increase by about 1.6%. That being said, the AUC = .563 was quite small, meaning the model is not that good or different than chance level.
 
 ## Conclusions
