@@ -1,6 +1,7 @@
 #clearing environment and loading libraries
 rm(list = ls())
 library(dplyr)
+library(stringr)
 
 ####RETRIEVING DATA ----
 
@@ -40,7 +41,7 @@ raw_data <- collected_data |>
     Playstyle = as.character(Playstyle)
   )
 
-#renaming values in "Playstyle" column
+#renaming values in "Playstyle", "Work" and "Degree" columns (using different functions just for the assignment)
 raw_data <- raw_data |>
   mutate(
     Playstyle = case_when(
@@ -48,11 +49,27 @@ raw_data <- raw_data |>
       Playstyle == "Multiplayer - online - with online acquaintances or teammates" ~ "Acquaintances",
       Playstyle == "Multiplayer - online - with strangers" ~ "Strangers",
       TRUE ~ Playstyle
+    ),
+    Work = case_when(
+      grepl("school", Work) ~ "School",
+      grepl("university", Work) ~ "University",
+      grepl("Unemployed", Work) ~ "Unemployed",
+      TRUE ~ Work
+    ),
+    
+    #Degreee had problematic coding of non-breaking spaces. next line replaces them with regular spaces
+    Degree = str_replace_all(Degree, "\\xa0", " "),
+    Degree = case_when(
+      grepl("High", Degree, fixed = TRUE) ~ "High_School_Diploma",
+      grepl("Bachelor", Degree, fixed = TRUE) ~ "B.A",
+      grepl("Master", Degree, fixed = TRUE) ~ "M.A",
+      grepl("Ph.D", Degree, fixed = TRUE) ~ "PHD",
+      TRUE ~ Degree
     )
   )
 
 #filtering out data that is hard to process (people that answered "other")
-raw_data <- raw_data |>
+simple_raw_data <- raw_data |>
   filter(Whyplay %in% c("having fun", "improving", "winning", "relaxing")) |>
   filter(Playstyle %in% c("Friends", "Strangers", "Singleplayer", "Acquaintances"))
 
@@ -61,3 +78,27 @@ paste("The amount of participants in experiment:", nrow(raw_data))
 
 #saving raw data
 save(raw_data, file = "Processed Data/raw_data.RData")
+save(simple_raw_data, file = "Processed Data/simple_raw_data.RData")
+
+####DESCRIPTIVE DATA VIEWING----
+
+
+#descriptive statistics of all measured variables
+source("Scripts/Functions.R")
+descriptive_data <- descriptive_statistics(simple_raw_data)
+descriptive_data$Numeric_Summary
+descriptive_data$Character_Summary
+
+#note: added this also to show more dplyr uses (gruop_by and summarise).
+#summary table of psychological measures by gender among gamers
+psychological_measures_by_gender <- raw_data |>
+  group_by(Gender) |>
+  summarise(
+    amount = n(),
+    mean_age = mean(Age, na.rm = TRUE),
+    sd_age = sd(Age, na.rm = TRUE),
+    mean_anxiety = mean(Anxiety, na.rm = TRUE),
+    mean_social_anxiety = mean(Social_Anxiety, na.rm = TRUE),
+    mean_well_being = mean(Well_Being, na.rm = TRUE),
+    mean_narcissism = mean(Narcissism, na.rm = TRUE)
+  )

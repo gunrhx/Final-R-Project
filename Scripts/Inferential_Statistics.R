@@ -1,6 +1,7 @@
 ####INFERENTIAL STATISTICS
 
 #loading data and libraries
+rm(list = ls())
 load("Processed Data/filtered_data.RData")
 load("Processed Data/filtered_data_Singleplayer_only.RData")
 library(ggplot2)
@@ -17,10 +18,13 @@ overall_effect_on_Anxiety <- ggplot(filtered_data, aes(x = Hours_per_week, y = A
   geom_smooth(method = "lm", alpha = 0.2, aes(fill = Playstyle)) + 
   labs(
     title = "Predicting Anxiety by Hours per Week and Playstyle",
+    subtitle = ""
     x = "Hours per Week",
     y = "Anxiety",
   ) +
-  theme_minimal()
+  theme_minimal() +
+  scale_x_continuous(breaks = seq(0, max(filtered_data$Hours_per_week), by = 20), minor_breaks = seq(0, max(filtered_data$Hours_per_week), by = 10))
+
 
 ####PREDICTING DAILY ANXIETY DIFFICULTY BY HOURS PER WEEK AMONG SINGLEPLAYER GAMERS (LOGICAL REGRESSION) ----
 

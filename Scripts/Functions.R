@@ -1,65 +1,47 @@
-####GENERAL FUNCTIONS SCRIPT ----
+####GENERAL FUNCTIONS SCRIPT
 
-####DESCRIPTIVE SUMMARY FUNCTION----
+####DESCRIPTIVE DATA FRAME SUMMARY FUNCTION----
 
-descriptive_stats <- function(df) {
+descriptive_statistics <- function(df) {
   
-  #setting empty variables
-  results_numeric = data.frame()
-  results_categorial = data.frame()
-  temp = data.frame()
-  
-  #loop for all column names
-  for (name in names(df)) {
-    
-    #condition for numeric variables:
-    if(typeof(df[[name]]) %in% c("integer", "double")) {
-      temp <- data.frame(
-        variable = name,
-        range = paste(range(df$name, na.rm = TRUE)[1], "-", range(df[[name]], na.rm = TRUE)[2]),
-        mean = mean(df[[name]], na.rm = TRUE),
-        sd = sd(df[[name]], na.rm = TRUE)
-      )
-      results_numeric = rbind(results_numeric, temp)
-      temp = data.frame()
-    }
-    
-    #condition for character variables:
-    else if(typeof(df[[name]]) == "character") {
-      browser()
-      temp_table <- table(df[[name]])
-      counter = 1
-      
-      ##loop for categories in each character variable
-      for (Levels in unique(df[[name]])) {
-        
-        temp <- data.frame(
-          variable = name,
-          categories = Levels,
-          frequency = temp_table[counter]
-        )
-        counter = counter + 1
-        
-        results_categorial = rbind(results_categorial, temp)
-        temp = data.frame()
-      }
-    }
-
+  #numeric columns summary
+  numeric_cols <- df[sapply(df, is.numeric)]
+  if (ncol(numeric_cols) > 0) {
+    numeric_summary <- data.frame(
+      Variable = names(numeric_cols),
+      Range = sapply(numeric_cols, function(x) {
+        rounded_range <- round(range(x, na.rm = TRUE), 2)  # Round both min and max
+        paste0(rounded_range[1], " - ", rounded_range[2])
+      }),
+      Mean = sapply(numeric_cols, function(x) round(mean(x, na.rm = TRUE), 2)),  # Rounded to 2 decimals
+      SD = sapply(numeric_cols, function(x) round(sd(x, na.rm = TRUE), 2))  # Rounded to 2 decimals
+    )
+    rownames(numeric_summary) <- NULL
+  } else {
+    numeric_summary <- NULL
   }
-  return(list(results_numeric, results_categorial))
+  
+  #character columns summary (without columns with mostly unique values)
+  char_cols <- df[sapply(df, is.character)]
+  char_cols <- char_cols[, sapply(char_cols, function(x) length(unique(x)) < (0.5 * length(x))), drop = FALSE]
+  
+  char_summary <- list()
+  
+  if (ncol(char_cols) > 0) {
+    char_summary <- lapply(names(char_cols), function(col) {
+      char_table <- as.data.frame(table(df[[col]], useNA = "ifany"))
+      colnames(char_table) <- c("Levels", "Frequency")
+      char_table
+    })
+    names(char_summary) <- names(char_cols)
+  }
+  
+  #return both summaries as a list
+  return(list(Numeric_Summary = numeric_summary, Character_Summary = char_summary))
 }
 
-
-try_fun <- function(df) {
-  
-  library(dplyr)
-  
-  results_numeric <- raw_data |>
-    select(where(is.numeric)) |>
-    summarise(across(everything(), c(mean = mean, sd = sd), na.rm = TRUE))
-  
-  
-  
-  
-  
-}
+#example usage:
+#results <- descriptive_statistics(your_dataframe)
+#View(results$Numeric_Summary)
+#View(results$Character_Summary)
+# View(results$Character_Summary$Specific_Variable)
