@@ -49,9 +49,9 @@ roc_curve <- roc(filtered_data_Singleplayer_only, Anxiety_Debilitation, Predicte
 png("Graphs/ROC_Curve.png", width = 800, height = 600)
 plot.roc(
   roc_curve, col = "red", lwd = 3, 
-  main = "ROC Curve for Anxiety Difficulty Model", 
+  main = "ROC Curve for Anxiety Debilitation Model", 
   print.auc = TRUE, print.auc.col = "black",
-  print.auc.cex = 1.2, print.auc.x = 0.6, print.auc.y = 0.2
+  print.auc.cex = 1.2, print.auc.x = 0.6, print.auc.y = 0.2, cex.main = 1.5
   )
 dev.off()
 
