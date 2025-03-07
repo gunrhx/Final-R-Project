@@ -1,12 +1,12 @@
 ####INFERENTIAL STATISTICS
 
-#loading data and libraries
+#clearing environment and loading libraries and data
 rm(list = ls())
 load("Processed Data/filtered_data.RData")
 load("Processed Data/filtered_data_Singleplayer_only.RData")
 library(ggplot2)
-library(pROC)
 library(ggpubr)
+library(pROC)
 
 ####PREDICTING ANXIETY BY HOURS PER WEEK AND PLAYSTYLE (LINEAR REGRESSION) ----
 
@@ -35,30 +35,35 @@ linear_regression_result_graph <- ggplot(filtered_data, aes(x = Hours_per_week, 
 #saving linear regression results graph
 ggsave("Graphs/Anxiety-Predicted-by-Hours-and-Playstyle.png", plot = linear_regression_result_graph)
 
+####PREDICTING DAILY ANXIETY Debilitation BY HOURS PER WEEK AMONG SINGLEPLAYER GAMERS (LOGICAL REGRESSION) ----
 
-####PREDICTING DAILY ANXIETY DIFFICULTY BY HOURS PER WEEK AMONG SINGLEPLAYER GAMERS (LOGICAL REGRESSION) ----
+#Fit logistic regression model
+logistic_model_Anxiety_Debilitation <- glm(Anxiety_Debilitation ~ Hours_per_week, data = filtered_data_Singleplayer_only, family = "binomial")
+summary(logistic_model_Anxiety_Debilitation)
 
 #adding column of predicted probabilities
-filtered_data_Singleplayer_only$Predicted_Prob <- predict(logistic_model_Anxiety_Difficulty, type = "response")
+filtered_data_Singleplayer_only$Predicted_Prob <- predict(logistic_model_Anxiety_Debilitation, type = "response")
 
-#Fit the logistic regression model
-logistic_model_Anxiety_Difficulty <- glm(Anxiety_Difficulty ~ Hours_per_week, data = filtered_data_Singleplayer_only, family = "binomial")
-summary(logistic_model_Anxiety_Difficulty)
+#roc curve fitting, plotting and saving image
+roc_curve <- roc(filtered_data_Singleplayer_only, Anxiety_Debilitation, Predicted_Prob)
+png("Graphs/ROC_Curve.png", width = 800, height = 600)
+plot.roc(
+  roc_curve, col = "red", lwd = 3, 
+  main = "ROC Curve for Anxiety Difficulty Model", 
+  print.auc = TRUE, print.auc.col = "black",
+  print.auc.cex = 1.2, print.auc.x = 0.6, print.auc.y = 0.2
+  )
+dev.off()
 
-#roc curve
-roc_curve <- roc(filtered_data_Singleplayer_only, Anxiety_Difficulty, Predicted_Prob)
-roc_curve$auc
-plot.roc(roc_curve)
-
-#plotting results
+#plotting logical regression results
 high_anxiety_probability <- ggplot(filtered_data_Singleplayer_only, aes(x = Hours_per_week, y = Predicted_Prob)) +
   geom_point(alpha = 0.3) +  # Scatter plot of raw data
   geom_smooth(method = "glm", method.args = list(family = "binomial"), color = "blue") +
   labs(
-    title = "Probability of High Anxiety Difficulty by Gaming Hours in Singleplayer",
-    subtitle = "confidence level = 0.95",
+    title = "Probability of High Anxiety Debilitation by Gaming Hours in Singleplayer",
+    subtitle = "confidence interval = 0.95",
     x = "Hours Spent Gaming per Week",
-    y = "Predicted Probability of High Anxiety Difficulty"
+    y = "Predicted Probability of High Anxiety Debilitation"
   ) +
   theme_minimal() +
   scale_x_continuous(breaks = seq(0, max(filtered_data_Singleplayer_only$Hours_per_week), by = 20),
@@ -66,4 +71,6 @@ high_anxiety_probability <- ggplot(filtered_data_Singleplayer_only, aes(x = Hour
   scale_y_continuous(breaks = seq(0, 1, by = .1), minor_breaks = seq(0,1, by = .05))
 
 #saving logistic regression results graph
-ggsave("Graphs/Anxiety-Difficulty-Predicted-by-Hours-In-Singleplayer.png", plot = high_anxiety_probability)
+ggsave("Graphs/Anxiety-Debilitation-Predicted-by-Hours-In-Singleplayer.png", plot = high_anxiety_probability)
+
+

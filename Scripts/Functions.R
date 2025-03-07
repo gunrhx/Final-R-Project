@@ -2,7 +2,14 @@
 
 ####DESCRIPTIVE DATA FRAME SUMMARY FUNCTION----
 
+#This function takes a data frame as input and returns a summary of its numeric and categorical variables.
+#Numeric variables are summarized with their range, mean, and standard deviation.
+#Categorical variables (including factors) are summarized with frequency counts, excluding highly unique values.
+
 descriptive_statistics <- function(df) {
+  
+  #converting factor variables to character
+  df <- df |> mutate(across(where(is.factor), as.character))
   
   #numeric columns summary
   numeric_cols <- df[sapply(df, is.numeric)]
@@ -10,12 +17,13 @@ descriptive_statistics <- function(df) {
     numeric_summary <- data.frame(
       Variable = names(numeric_cols),
       Range = sapply(numeric_cols, function(x) {
-        rounded_range <- round(range(x, na.rm = TRUE), 2)  # Round both min and max
+        rounded_range <- round(range(x, na.rm = TRUE), 2)
         paste0(rounded_range[1], " - ", rounded_range[2])
       }),
-      Mean = sapply(numeric_cols, function(x) round(mean(x, na.rm = TRUE), 2)),  # Rounded to 2 decimals
-      SD = sapply(numeric_cols, function(x) round(sd(x, na.rm = TRUE), 2))  # Rounded to 2 decimals
+      Mean = sapply(numeric_cols, function(x) round(mean(x, na.rm = TRUE), 2)),
+      SD = sapply(numeric_cols, function(x) round(sd(x, na.rm = TRUE), 2))
     )
+    #deleting duplicate variable name columns
     rownames(numeric_summary) <- NULL
   } else {
     numeric_summary <- NULL
@@ -31,7 +39,7 @@ descriptive_statistics <- function(df) {
     char_summary <- lapply(names(char_cols), function(col) {
       char_table <- as.data.frame(table(df[[col]], useNA = "ifany"))
       colnames(char_table) <- c("Levels", "Frequency")
-      char_table
+      return(char_table)
     })
     names(char_summary) <- names(char_cols)
   }

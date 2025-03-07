@@ -1,8 +1,9 @@
 ####EXPLORATIVE DATA PLOTTING
 
-#loading packages and data
+#clearing environment and loading libraries and data
 rm(list = ls())
 load("Processed Data/simple_raw_data.RData")
+library(dplyr)
 library(ggplot2)
 library(patchwork)
 
@@ -14,14 +15,6 @@ whyplay_gender_anxiety_summary <- simple_raw_data |>
     mean = mean(Anxiety),
     sd = sd(Anxiety)
   )
-
-####DESCRIPTIVE DATA VIEWING----
-
-#descriptive statistics of all measured variables
-source("Scripts/Functions.R")
-descriptive_data <- descriptive_statistics(simple_raw_data)
-descriptive_data$Numeric_Summary
-descriptive_data$Character_Summary
 
 ####PLOTTING ----
 
@@ -39,7 +32,7 @@ anxiety_by_hours_per_gender <- ggplot(simple_raw_data, aes(x = Hours_per_week, y
   ) +
   theme_minimal()
 
-#anxiety predicted by hours per week predicting  by playstyle
+#anxiety predicted by hours per week predicting, divided by playstyle
 anxiety_by_hours_per_playstle <- ggplot(simple_raw_data, aes(x = Hours_per_week, y = Anxiety, fill = Playstyle, color = Playstyle)) +
   geom_smooth(method = "lm", level = .95) +
   xlim(0,160) +
@@ -70,7 +63,7 @@ bars_gaming_reason_by_playstyle <- ggplot(simple_raw_data, aes(x = Whyplay, fill
   ) +
   theme_minimal()
 
-#social anxiety predicted by playstyle
+#boxplots of social anxiety by playstyle
 boxplot_social_anxiety_by_playstyle <- ggplot(simple_raw_data , aes(x = Social_Anxiety, fill = Playstyle)) +
   stat_boxplot(position = "dodge") +
   labs(
@@ -79,7 +72,8 @@ boxplot_social_anxiety_by_playstyle <- ggplot(simple_raw_data , aes(x = Social_A
   ) +
   theme_minimal() +
   theme(axis.text.y = element_blank(), axis.ticks.y = element_blank()) +
-  scale_x_continuous(breaks = seq(0, 80, by = 10), minor_breaks = seq(0, 80, by = 5))
+  scale_x_continuous(breaks = seq(0, max(simple_raw_data$Social_Anxiety), by = 10),
+                     minor_breaks = seq(0, max(simple_raw_data$Social_Anxiety), by = 5))
 
 #anxiety, well being and social anxiety densities
 anxiety_density <- ggplot(simple_raw_data, aes(x = Anxiety)) + 
@@ -97,7 +91,7 @@ well_being_density <- ggplot(simple_raw_data, aes(x = Well_Being)) +
   labs(title = "Density of Well-Being", x = "Well-Being Level", y = "Density") +
   theme_minimal()
 
-#anxiety, well being and social anxiety density viewed one under the other
+##anxiety, well being and social anxiety density viewed one under the other
 anxiety_and_well_being_densities <- (anxiety_density | social_anxiety_density | well_being_density) +
   plot_annotation(
     title = "Comparison of Anxiety, Social Anxiety, and Well-Being Densities",
