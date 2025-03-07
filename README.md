@@ -1,47 +1,49 @@
 # Final-R-Project: Gaming Survey Data Research Analysis
  
 ## General Information
-This data was collected from gamers worldwide. I picked it because I really enjoy gaming, and have always wondered about the negative label people put on it. It is mostly researched as an anxiety inducing practice, socially isolating, etc. I believe that, as most things in life, it depends on many variables, and that the negative effects don't neccessarily comes from gaming itself, but more from being online. That's one thing I set to research from this analysis.
+This dataset, called "Online Gaming Anxiety Data", was collected from gamers worldwide, and retrieved from the kaggle.com website. It has psychological measures of anxiety, social anxiety and well being, in addition to gaming preferences and habits and demographic information. I picked it because I really enjoy gaming, and have always wondered about the negative label people put on it. It is mostly researched as an anxiety inducing practice, or socially isolating, etc. I believe that, as most things in life, gaming's effect depends on many variables, so that the negative effects don't neccessarily comes from gaming itself, but more from gaming online. In my view, gaming alone actually has many positive effects. These are the things I set to learn about from this analysis.
 
 ## Research Question
-What is the relationship between anxiety and it's debilitating effect, particularly in terms of time investment and social gaming preferences?
-To answer this question, I've tested the association between self-reported general anxiety, as measured by GAD - General Anxiety Disorder scale (0-21, higher score equals higher anxiety levels), reported hours spent gaming per week, and gaming online (multiplayer) or offline (singleplayer). In addition, I've tested the association between the perceived debilitating effect of anxiety and hours played, specifically in singleplayer-offline gamers.
+What is the relationship between anxiety and it's debilitating effect, in terms of time investment and gaming playstyle?  
+To answer this question, I've tested the association between self-reported general anxiety, as measured by GAD - General Anxiety Disorder scale (0-21, higher score equals higher anxiety levels), reported hours spent gaming per week and gaming online (multiplayer) or offline (singleplayer). In addition, I've tested the association between the perceived debilitating effect of anxiety and hours played, specifically in singleplayer-offline gamers.
 
-My hypothesys are that gaming more hours alone would predict higher anxiety, but that the effect would be attenuated or reversed when playing singleplayer, in comparison to multiplayer. In addition, I hypothesize that in the singleplayer population, gaming more would be associated with a decreased anxiety debilitating effect, since it should have a calming effect.
+### Hypothesys
+My hypothesis is that gaming more hours alone would predict higher anxiety, but that the effect would be attenuated or reversed when playing singleplayer, in comparison to multiplayer. I also hypothesize that within singleplayer gamers, gaming more would be associated with a decreased anxiety debilitating effect, since it should have a calming effect to help against anxiety. Importantly, it needs to be said that no causality can be inferred from this research analysis, since only correlations of a survey are at hand.
 
-Final R project: research question, data processing, results and conclusions
-
-## Data Processing and Filtering Notes
+## Data Processing and Data Filtering Notes
 ### Required Packeges
 To run my analysis on your own and view the non-attached graphs, you will need Rstudio or another program that runs R, and the following packages:
 1. ggplot2
 2. dplyr
 3. patchwork
 4. pROC
-If you don't have any of these, you can run the following command in Rstudio:
+5. stringr
+If you don't have any of these, you can run the following command in Rstudio to install them:
 ```r
-install.packages("name_of_package")
+install.packages('name_of_package')
 ```
 
 ### Excluded Data
-For my research, I had removed all participants that answered "other" in any of the survey questions, since they wouldn't fit any specific category in my analysis. In addition, anyone that reported playing more hours than two SD's of hours per week (144) was excluded, on the basis of being extreme observations. Lastly, anyone that didn't answer one of the analysis based questions (General Anxiety Disorder, anxiety debilitating effect, hours per week gaming or playing single/multiplayer) was also excluded.
-Amount who completed the survery: 13464
-Amount after filtering:           12041
+For my research, I had removed all participants that answered "other" in any of the survey questions, since they wouldn't fit any specific category in my analysis. In addition, anyone that reported playing more hours than two SD's of hours per week (144) was excluded, on the basis of being extreme observations. Lastly, any participant that didn't answer one of the analysis based questions (General Anxiety Disorder, anxiety debilitating effect, hours per week gaming or playing single/multiplayer) was also excluded.
+#### Overall Participant Numbers:
+Amount who completed the survery:                 13464  
+Amount after filtering:                           12041  
+Amount of singleplayer gamers after filtering:    697
+
+### Anxiety-Dibilitating-Effect Coding
+I chose to refer to the anxiaty dibilitating effect as **low dibilitating** when a participant answered "Not difficult at all" or "Somewhat difficult", and **highly dibilitating** when they answered "Very difficult" or "Extremely difficult".
 
 ## Data Analysis
 ### Inferential Statistics
 For my analysis, I used two regressions:
-1. Multiple Linear Regression: predicting anxiety using hours gaming per week, playstyle (single/multiplayer) and their interaction.
-2. Logistic Regression: predicting anxiety dibilitating properties using hours gaming per week, in singleplayer population only.
+1. **Multiple Linear Regression**: Predicting anxiety using hours gaming per week, playstyle (single/multiplayer) and their interaction.
+2. **Logistic Regression**: Predicting anxiety dibilitating properties using hours gaming per week, in singleplayer gamers only.
 
 ### Results
-As was hypothesized, more gaming hours were associated with more anxiety mostly in the population playing multiplayer (β = .037, _p_ = 2*10^-16), an effect that was almost completely attenuated in the population playing singleplayer (β = -.032, _p_ = .0115). These results suggests that in the multiplayer population, each hour spent gaming increases anxiety levels by 0.037 points, but in the singleplayer population this decreases by 0.032 points (resulting in an overall increase of 0.005 for singleplayer).
+As hypothesized, more gaming hours were associated with more anxiety mostly in multiplayer gamers (β = .037, _p_ = 2 * 10^-16), an effect that was almost completely attenuated in singleplayer gamers (β = -.032, _p_ = .0115). These results suggests that multiplayer gamers, each hour spent gaming increases anxiety levels by 0.037 points, but with singleplayer gamers this decreases by 0.032 points (resulting in an overall increase of 0.005 for singleplayer).  
+Another result concluded from the regression is that when not gaming at all (hours per week = 0), anxiety is higher for singleplayer gamers than in multiplayer gamers (β = 1.249784, p = 4.9 * 10^-5).  
+Still, the R squared of the model was quite low (.012), which means very little variance could be explained by it. 
 ![Anxiety Predicted by Hours and Playstyle](Graphs/Anxiety-Predicted-by-Hours-and-Playstyle.png)
 
-Against my second hypothesis, in the singleplayer population, hours spent gaming per week was a significant predictor of experiencing debilitating anxiety effects (β = .016, _p_ = .021, odds ratio = 1.016). The odds ratio suggests that for each additional hour spent gaming per week, the odds of reporting high anxiety difficulty increase by about 1.6%. That being said, the AUC = .563 was quite small, meaning the model is not that good or different than chance level.
-![Anxiety Difficulty Predicted by Hours in Singleplayer Population](Graphs/Anxiety-Difficulty-Predicted-by-Hours-In-Singleplayer.png)
-
-## Conclusions
-
-
-
+Against my second hypothesis, in singleplayer gamers, hours spent gaming per week was a significant predictor of experiencing debilitating anxiety effects (β = .016, _p_ = .021, odds ratio = 1.016). The odds ratio suggests that for each additional hour spent gaming per week, the odds of reporting highly dibilitating anxiety increased by about 1.6%. That being said, the AUC = .563 was quite small, meaning the model is not a very good one, since it is not that different than chance level.
+![Anxiety Difficulty Predicted by Hours in Singleplayer Gamers](Graphs/Anxiety-Difficulty-Predicted-by-Hours-In-Singleplayer.png)
