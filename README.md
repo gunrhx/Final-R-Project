@@ -4,11 +4,12 @@
 This dataset, called "Online Gaming Anxiety Data", was collected from gamers worldwide, and retrieved from the kaggle.com website. It has psychological measures of anxiety, social anxiety and well being, in addition to gaming preferences and habits and demographic information. I picked it because I really enjoy gaming, and have always wondered about the negative label people put on it. It is mostly researched as an anxiety inducing practice, or socially isolating, etc. I believe that, as most things in life, gaming's effect depends on many variables, so that the negative effects don't neccessarily comes from gaming itself, but more from gaming online. In my view, gaming alone actually has many positive effects. These are the things I set to learn about from this analysis.
 
 ## Research Question
-What is the relationship between anxiety and it's debilitating effect, in terms of time investment and gaming playstyle?  
+How do gaming hours and playstyle (multiplayer vs. singleplayer) impact anxiety levels and its debilitating effects? 
 To answer this question, I've tested the association between self-reported general anxiety, as measured by GAD - General Anxiety Disorder scale (0-21, higher score equals higher anxiety levels), reported hours spent gaming per week and gaming online (multiplayer) or offline (singleplayer). In addition, I've tested the association between the perceived debilitating effect of anxiety and hours played, specifically in singleplayer-offline gamers.
 
 ### Hypothesys
-My hypothesis is that gaming more hours alone would predict higher anxiety, but that the effect would be attenuated or reversed when playing singleplayer, in comparison to multiplayer. I also hypothesize that within singleplayer gamers, gaming more would be associated with a decreased anxiety debilitating effect, since it should have a calming effect to help against anxiety. Importantly, it needs to be said that no causality can be inferred from this research analysis, since only correlations of a survey are at hand.
+- I hypothesize that gaming more hours will be associated with higher anxiety, but that the effect will be attenuated or reversed when playing singleplayer, in comparison to multiplayer.
+- I also hypothesize that within singleplayer gamers, gaming more would be associated with a decreased anxiety debilitating effect, since it should have a calming effect to help against anxiety. Importantly, it needs to be said that no causality can be inferred from this research analysis, since only correlations of a survey are at hand.
 
 ## Data Processing and Data Filtering Notes
 ### Required Packeges
