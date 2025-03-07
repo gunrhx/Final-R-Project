@@ -6,6 +6,7 @@ load("Processed Data/filtered_data.RData")
 load("Processed Data/filtered_data_Singleplayer_only.RData")
 library(ggplot2)
 library(pROC)
+library(ggpubr)
 
 ####PREDICTING ANXIETY BY HOURS PER WEEK AND PLAYSTYLE (LINEAR REGRESSION) ----
 
@@ -14,8 +15,11 @@ linear_model_Anxiety <- lm(data = filtered_data, Anxiety ~ Hours_per_week * Play
 summary(linear_model_Anxiety)
 
 #plotting linear regression results
-overall_effect_on_Anxiety <- ggplot(filtered_data, aes(x = Hours_per_week, y = Anxiety, color = Playstyle)) +
-  geom_smooth(method = "lm", alpha = 0.2, aes(fill = Playstyle)) + 
+linear_regression_result_graph <- ggplot(filtered_data, aes(x = Hours_per_week, y = Anxiety)) +
+  stat_regline_equation(formula = filtered_data$Anxiety ~ filtered_data$Hours_per_week * filtered_data$Playstyle,
+                        position = position_nudge(y = -10.5),
+                        aes(label = after_stat(rr.label))) +
+  geom_smooth(method = "lm", alpha = 0.2, aes(fill = Playstyle, color = Playstyle)) + 
   labs(
     title = "Predicting Anxiety by Hours per Week and Playstyle",
     subtitle = "confidence interval: 0.95",
@@ -29,7 +33,7 @@ overall_effect_on_Anxiety <- ggplot(filtered_data, aes(x = Hours_per_week, y = A
                      minor_breaks = seq(0, max(filtered_data$Anxiety), by = .5))
 
 #saving linear regression results graph
-ggsave("Graphs/Anxiety-Predicted-by-Hours-and-Playstyle.png", plot = overall_effect_on_Anxiety)
+ggsave("Graphs/Anxiety-Predicted-by-Hours-and-Playstyle.png", plot = linear_regression_result_graph)
 
 
 ####PREDICTING DAILY ANXIETY DIFFICULTY BY HOURS PER WEEK AMONG SINGLEPLAYER GAMERS (LOGICAL REGRESSION) ----
