@@ -45,12 +45,19 @@ roc_curve$auc
 plot.roc(roc_curve)
 
 #plotting results
-ggplot(filtered_data_Singleplayer_only, aes(x = Hours_per_week, y = Predicted_Prob)) +
+high_anxiety_probability <- ggplot(filtered_data_Singleplayer_only, aes(x = Hours_per_week, y = Predicted_Prob)) +
   geom_point(alpha = 0.3) +  # Scatter plot of raw data
   geom_smooth(method = "glm", method.args = list(family = "binomial"), color = "blue") +
   labs(
     title = "Probability of High Anxiety Difficulty by Gaming Hours",
+    subtitle = "confidence level = 0.95",
     x = "Hours Spent Gaming per Week",
     y = "Predicted Probability of High Anxiety Difficulty"
   ) +
-  theme_minimal()
+  theme_minimal() +
+  scale_x_continuous(breaks = seq(0, max(filtered_data_Singleplayer_only$Hours_per_week), by = 20),
+                     minor_breaks = seq(0, max(filtered_data_Singleplayer_only$Hours_per_week), by = 10)) +
+  scale_y_continuous(breaks = seq(0, 1, by = .1), minor_breaks = seq(0,1, by = .05))
+
+#saving results graph
+ggsave("Graphs/Anxiety-Difficulty-Predicted-by-Hours-In-Singleplayer.png", plot = high_anxiety_probability)
