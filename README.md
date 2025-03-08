@@ -9,16 +9,18 @@ To answer this question, I've tested the association between self-reported gener
 
 ### Hypothesys
 - I hypothesize that gaming more hours will be associated with higher anxiety, but that the effect will be attenuated or reversed when playing singleplayer, in comparison to multiplayer.
-- I also hypothesize that within singleplayer gamers, gaming more would be associated with a decreased anxiety debilitating effect, since it should have a calming effect to help against anxiety. Importantly, it needs to be said that no causality can be inferred from this research analysis, since only correlations of a survey are at hand.
+- I also hypothesize that within singleplayer gamers, gaming more would be associated with a decreased anxiety debilitating effect, since it should have a calming effect to help against anxiety.
+- Importantly, it needs to be said that no causality can be inferred from this research analysis, since only correlations of a survey are at hand.
 
 ## Data Processing and Data Filtering Notes
-### Required Packeges
+### Required Packages
 To run my analysis on your own and view the non-attached graphs, you will need Rstudio or another program that runs R, and the following packages:
 1. ggplot2
-2. dplyr
-3. patchwork
-4. pROC
-5. stringr  
+2. ggpubr
+3. dplyr
+4. patchwork
+5. pROC
+6. stringr  
 If you don't have any of these, you can run the following command in Rstudio to install them:
 ```r
 install.packages('name_of_package')
@@ -42,10 +44,11 @@ For my analysis, I used two regressions:
 
 ### Results
 - As hypothesized, more gaming hours were associated with more anxiety mostly in multiplayer gamers (β1 = .037, _p_ = 2 * 10^-16), an effect that was almost completely attenuated in singleplayer gamers (β3 = -.033, _p_ = .0115). These results suggests that for multiplayer gamers, each hour spent gaming increases anxiety levels by 0.037 points, but with singleplayer gamers this decreases by 0.033 points, resulting in a weaker effect of only 0.004 increase in anxiety for singleplayer gamers for each additional hour.  
-- Another result concluded from the regression is that when not gaming at all (hours per week = 0), singleplayer gamers report about 1.249 points higher anxiety than multiplayer gamers (β2 = 1.249, p = 4.9 * 10^-5).  
-Still, the R squared of the model was quite low (R^2 = .012), which means very little variance could be explained by it (1.2%). This means that other untested measures probably have a bigger role in this effect on anxiety.
+- Another result concluded from the regression is that when not gaming at all (hours per week = 0), singleplayer gamers report about 1.249 points higher anxiety than multiplayer gamers (β2 = 1.249, _p_ = 4.9 * 10^-5).  
+- Still, the R squared of the model was quite low (R^2 = .012), which means very little variance could be explained by it (1.2%). This means that other untested measures probably have a bigger role in this effect on anxiety.
 ![Anxiety Predicted by Hours and Playstyle](Graphs/Anxiety-Predicted-by-Hours-and-Playstyle.png)
 
-- Contrary to my second hypothesis, in singleplayer gamers, hours spent gaming per week was a significant predictor of experiencing debilitating anxiety effects (β = .015, _p_ = .0251, OR = 1.015). The odds ratio suggests that for each additional hour spent gaming per week, the odds of reporting highly debilitating anxiety is increased by 1.5% multiplicatively. That being said, the AUC = .559 was quite small, meaning the model is not a very good one, since it is not that different than chance level (.50).
+- Contrary to my second hypothesis, in singleplayer gamers, hours spent gaming per week was a significant predictor of experiencing debilitating anxiety effects (β = .015, _p_ = .0251, OR = 1.015). The odds ratio suggests that for each additional hour spent gaming per week, the odds of reporting highly debilitating anxiety is increased by 1.5% multiplicatively.
+- That being said, the AUC = .559 was quite small, meaning the model is not a very good one, since it is not that different than chance level (.50).
 ![Anxiety Debilitation Predicted by Hours in Singleplayer Gamers](Graphs/Anxiety-Debilitation-Predicted-by-Hours-In-Singleplayer.png)
 ![ROC Curve of Logistic Model](Graphs/ROC_Curve.png)

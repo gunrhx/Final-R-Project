@@ -18,6 +18,7 @@ filtered_data <- simple_raw_data |>
   ##factoring Playstyle (base = Multiplayer) and Anxiety_Debilitation (0 = low anxiety)
   mutate(
     Playstyle = factor(ifelse(Playstyle == "Singleplayer", "Singleplayer", "Multiplayer")),
+    ###those who answered Very or Extremely Difficult were factored as 1, the rest 0
     Anxiety_Debilitation = factor(ifelse(grepl("Very|Extremely", Anxiety_Debilitation), 1, 0))
   )
 filtered_data$Playstyle <- relevel(filtered_data$Playstyle, ref = "Multiplayer")

@@ -32,7 +32,7 @@ anxiety_by_hours_per_gender <- ggplot(simple_raw_data, aes(x = Hours_per_week, y
   ) +
   theme_minimal()
 
-#anxiety predicted by hours per week predicting, divided by playstyle
+#anxiety predicted by hours per week, divided by playstyle
 anxiety_by_hours_per_playstle <- ggplot(simple_raw_data, aes(x = Hours_per_week, y = Anxiety, fill = Playstyle, color = Playstyle)) +
   geom_smooth(method = "lm", level = .95) +
   xlim(0,160) +
@@ -91,7 +91,7 @@ well_being_density <- ggplot(simple_raw_data, aes(x = Well_Being)) +
   labs(title = "Density of Well-Being", x = "Well-Being Level", y = "Density") +
   theme_minimal()
 
-##anxiety, well being and social anxiety density viewed one under the other
+##anxiety, well being and social anxiety density viewed one next to another
 anxiety_and_well_being_densities <- (anxiety_density | social_anxiety_density | well_being_density) +
   plot_annotation(
     title = "Comparison of Anxiety, Social Anxiety, and Well-Being Densities",
@@ -109,6 +109,6 @@ errorbars_anxiety_by_gender_and_playstyle <- ggplot(whyplay_gender_anxiety_summa
     subtitle = "means and error bars with jitter",
     y = "Anxiety",
     x = "Reasons to play",
-    caption = "note: specified 'other' gender was removed from analysis"
+    caption = "Note: specified 'other' gender was removed from analysis"
   ) +
   facet_wrap(~Gender)
