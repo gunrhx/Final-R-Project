@@ -1,13 +1,13 @@
 # Final-R-Project: Gaming Survey Data Research Analysis
  
 ## General Information
-This dataset, called "Online Gaming Anxiety Data", was collected from gamers worldwide, and retrieved from the kaggle.com website. It has psychological measures of anxiety, social anxiety and well being, in addition to gaming preferences and habits and demographic information. I picked it because I really enjoy gaming, and have always wondered about the negative label people put on it. It is mostly researched as an anxiety inducing practice, or socially isolating, etc. I believe that, as most things in life, gaming's effect depends on many variables, so that the negative effects don't neccessarily comes from gaming itself, but more from gaming online. In my view, gaming alone actually has many positive effects. These are the things I set to learn about from this analysis.
+This dataset, called "Online Gaming Anxiety Data", was collected from gamers worldwide, and retrieved from the kaggle.com website. It has psychological measures of anxiety, social anxiety and well being, in addition to gaming preferences and habits and demographic information. I picked it because I really enjoy gaming, and have always wondered about the negative label people put on it. It is mostly researched as an anxiety inducing practice, or socially isolating, etc. I believe that gaming's effect, as most things in life, depends on many variables. I think that the negative effects don't necessarily result from gaming itself, but more from gaming online. In my view, gaming alone actually has many positive effects. These are the things I set to learn about from this analysis.
 
 ## Research Question
 How do gaming hours and playstyle (multiplayer vs. singleplayer) impact anxiety levels and its debilitating effects? 
 To answer this question, I've tested the association between self-reported general anxiety, as measured by GAD - General Anxiety Disorder scale (0-21, higher score equals higher anxiety levels), reported hours spent gaming per week and gaming online (multiplayer) or offline (singleplayer). In addition, I've tested the association between the perceived debilitating effect of anxiety and hours played, specifically in singleplayer-offline gamers.
 
-### Hypothesys
+### Hypotheses
 - I hypothesize that gaming more hours will be associated with higher anxiety, but that the effect will be attenuated or reversed when playing singleplayer, in comparison to multiplayer.
 - I also hypothesize that within singleplayer gamers, gaming more would be associated with a decreased anxiety debilitating effect, since it should have a calming effect to help against anxiety.
 - Importantly, it needs to be said that no causality can be inferred from this research analysis, since only correlations of a survey are at hand.
@@ -29,12 +29,12 @@ install.packages('name_of_package')
 ### Excluded Data
 For my research, I had removed all participants that answered "other" in any of the survey questions, since they wouldn't fit any specific category in my analysis. In addition, anyone that reported playing more hours than two SD's of hours per week (144) was excluded, on the basis of being extreme observations. Lastly, any participant that didn't answer one of the analysis based questions (General Anxiety Disorder, anxiety debilitating effect, hours per week gaming or playing single/multiplayer) was also excluded.
 #### Overall Participant Numbers:
-Amount who completed the survery:                 13464  
+Amount who completed the survey:                 13464  
 Amount after filtering:                           12041  
 Amount of singleplayer gamers after filtering:    701
 
 ### Anxiety-Debilitating-Effect Coding
-I chose to refer to the anxiaty debilitating effect as **low debilitating** when a participant answered "Not difficult at all" or "Somewhat difficult", and **highly debilitating** when they answered "Very difficult" or "Extremely difficult".
+I chose to refer to the anxiety debilitating effect as **low debilitating** when a participant answered "Not difficult at all" or "Somewhat difficult", and **highly debilitating** when they answered "Very difficult" or "Extremely difficult".
 
 ## Data Analysis
 ### Inferential Statistics

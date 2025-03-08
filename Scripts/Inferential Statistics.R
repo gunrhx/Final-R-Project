@@ -22,7 +22,7 @@ linear_regression_result_graph <- ggplot(filtered_data, aes(x = Hours_per_week, 
   geom_smooth(method = "lm", alpha = 0.2, aes(fill = Playstyle, color = Playstyle)) + 
   labs(
     title = "Predicting Anxiety by Hours per Week and Playstyle",
-    subtitle = "confidence interval: 0.95",
+    subtitle = "95% confidence interval",
     x = "Hours per Week",
     y = "Anxiety",
   ) +
