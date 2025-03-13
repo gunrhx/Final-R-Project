@@ -5,7 +5,7 @@ This dataset, called "Online Gaming Anxiety Data", was collected from gamers wor
 
 ## Research Question
 How do gaming hours and playstyle (multiplayer vs. singleplayer) impact anxiety levels and its debilitating effects? 
-To answer this question, I've tested the association between self-reported general anxiety, as measured by GAD - General Anxiety Disorder scale (0-21, higher score equals higher anxiety levels), reported hours spent gaming per week and gaming online (multiplayer) or offline (singleplayer). In addition, I've tested the association between the perceived debilitating effect of anxiety and hours played, specifically in singleplayer-offline gamers.
+To answer this question, I've tested the association between self-reported general anxiety, as measured by GAD - General Anxiety Disorder scale (0-21, higher score equals higher anxiety levels), reported hours spent gaming per week and gaming online (multiplayer) or offline (singleplayer). In addition, I've tested the association between the perceived debilitating effect of anxiety, as measured by a direct question (part of the GAD questionnaire), and hours gaming per week, specifically in singleplayer-offline gamers.
 
 ### Hypotheses
 - I hypothesize that gaming more hours will be associated with higher anxiety, but that the effect will be attenuated or reversed when playing singleplayer, in comparison to multiplayer.
